@@ -28,7 +28,32 @@ class Rucksack  {
     })
   
     console.log(value)
+    this.priority()
+  }
+
+  priority() {
+    let value = 0;
+    const letterValue = (letter) => {
+      if (/[a-z]/.test(letter)) { return letter.charCodeAt(0) - 96 }
+      if (/[A-Z]/.test(letter)) { return letter.charCodeAt(0) - 38 }
+    }
+
+    const arr = this.input.split(/\r?\n/);
+
+    for (let i = 0; i < arr.length; i+=3){
+      let line1Set = new Set([...arr[i]])
+      let line2Set = new Set([...arr[i+1]])
+      let comparisonString = arr[i+2];
+      for (let j = 0; j < comparisonString.length; j++) {
+        let ltr = comparisonString[j]
+        if ( line1Set.has(ltr) && line2Set.has(ltr) ){
+          value += letterValue(ltr);
+          break;
+        }
+      }
+    }
+      console.log(value) 
   }
 }
 const elfRucksack = new Rucksack;
-elfRucksack.commonItem(input);
+elfRucksack.priority();
